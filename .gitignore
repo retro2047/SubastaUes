@@ -1,0 +1,57 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Archivos de compilación y empaquetado
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Carpetas generadas por Gradle y compilación
+.gradle/
+build/
+*/build/
+out/
+
+# Archivos de configuración local (¡Muy importante que este no se suba!)
+local.properties
+
+# Archivos de configuración del IDE (Android Studio / IntelliJ)
+.idea/
+*.iml
+*.iws
+workspace.xml
+tasks.xml
+gradle.xml
+dictionaries/
+modules.xml
+.navigation/
+captures/
+
+# Archivos de logs y temporales
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Archivos de firmas y seguridad (Nunca subir contraseñas o keystores)
+*.jks
+*.keystore
+
+# Archivos del sistema operativo (Windows/Mac)
+Thumbs.db
+.DS_Store
