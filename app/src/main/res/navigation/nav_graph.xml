@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/catalogoFragment">
+
+    <fragment
+        android:id="@+id/catalogoFragment"
+        android:name="com.example.subastaues.fragments.CatalogoFragment"
+        android:label="Catálogo" />
+
+    <fragment
+        android:id="@+id/MisPujasFragment"
+        android:name="com.example.subastaues.fragments.MisPujasFragment"
+        android:label="Mis Pujas" />
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.subastaues.fragments.PerfilFragment"
+        android:label="Perfil" />
+
+</navigation>
