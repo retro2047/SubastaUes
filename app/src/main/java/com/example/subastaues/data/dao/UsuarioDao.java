@@ -19,6 +19,9 @@ public interface UsuarioDao {
     @Query("SELECT * FROM usuario WHERE id = :id")
     Usuario getUsuarioById(int id);
 
+    @Query("SELECT * FROM usuario WHERE correo = :correo LIMIT 1")
+    Usuario getUsuarioByCorreo(String correo);
+
     @Update
     void actualizar(Usuario usuario);
 

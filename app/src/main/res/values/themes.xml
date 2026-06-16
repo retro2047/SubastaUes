@@ -2,7 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SubastaUes" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/ues_primary</item>
+        <item name="colorPrimaryDark">@color/ues_primary_dark</item>
+        <item name="colorAccent">@color/ues_accent</item>
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="colorSurface">@color/card_light</item>
+        <item name="colorOnSurface">@color/black</item>
     </style>
 
     <style name="Theme.SubastaUes" parent="Base.Theme.SubastaUes" />
