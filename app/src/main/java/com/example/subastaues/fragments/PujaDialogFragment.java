@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -25,7 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class PujaDialogFragment extends DialogFragment {
-    //- Interfaz para notificar al fragmento del resultado de la puja
+    
     public interface OnPujaExitosaListener {
         void onPujaRealizada();
     }
@@ -36,13 +37,12 @@ public class PujaDialogFragment extends DialogFragment {
 
     private OnPujaExitosaListener listener;
 
-    // factory para crea el dialogo con datos}
     public static PujaDialogFragment newInstance(Articulo articulo) {
         PujaDialogFragment fragment = new PujaDialogFragment();
         Bundle args = new Bundle();
-        args.putInt("articuloId", articulo.id);
-        args.putString("articuloNombre", articulo.nombre);
-        args.putDouble("precioActual", articulo.precioActual);
+        args.putInt(ARG_ARTICULO_ID, articulo.id);
+        args.putString(ARG_ARTICULO_NOMBRE, articulo.nombre);
+        args.putDouble(ARG_PRECIO_ACTUAL, articulo.precioActual);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,28 +54,20 @@ public class PujaDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Bundle args = requireArguments();
+        String nombre = args.getString(ARG_ARTICULO_NOMBRE);
+        double precioActual = args.getDouble(ARG_PRECIO_ACTUAL);
 
-        // Recuperar datos del artículo
-        int articuloId = getArguments().getInt("articuloId");
-        String nombre = getArguments().getString("articuloNombre");
-        double precioActual = getArguments().getDouble("precioActual");
-
-        // infla el layout personalziado
-        View view = LayoutInflater.from(getContext())
+        View view = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_puja, null);
 
-        //referecnia a la vistas
         TextView tvNombre = view.findViewById(R.id.tvNombreArticuloDialog);
         TextView tvPrecio = view.findViewById(R.id.tvPrecioActualDialog);
-        EditText etMonto = view.findViewById(R.id.etMontoPuja);
-        TextView tvError = view.findViewById(R.id.tvError);
 
-        // asigancion de los datos
         tvNombre.setText(nombre);
         tvPrecio.setText(String.format(
                 Locale.getDefault(), "Precio actual: $ %.2f", precioActual));
 
-        // Construcion de alertDialog
         return new AlertDialog.Builder(requireContext())
                 .setTitle("Realizar Puja")
                 .setView(view)
@@ -88,37 +80,38 @@ public class PujaDialogFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        //Sobreescribir el click del boton pujar para validar antes de cerrar
         AlertDialog dialog = (AlertDialog) getDialog();
         if (dialog == null) return;
 
-        double precioActual = getArguments().getDouble("precioActual");
-        int articuloId = getArguments().getInt("articuloId");
+        double precioActual = requireArguments().getDouble(ARG_PRECIO_ACTUAL);
+        int articuloId = requireArguments().getInt(ARG_ARTICULO_ID);
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-
             EditText etMonto = dialog.findViewById(R.id.etMontoPuja);
             TextView tvError = dialog.findViewById(R.id.tvError);
 
             String input = etMonto.getText().toString().trim();
 
-            //validacion 1: campo vacio
             if (input.isEmpty()) {
                 tvError.setText("Ingresa un monto");
                 tvError.setVisibility(View.VISIBLE);
                 return;
             }
 
-            double montoPuja = Double.parseDouble(input);
+            try {
+                double montoPuja = Double.parseDouble(input);
 
-            //validacion 2: monto menor al precio actual
-            if (montoPuja <= precioActual) {
-                tvError.setText(String.format(
-                        Locale.getDefault(), "El monto debe ser mayor al precio actual: $ %.2f", precioActual));
+                if (montoPuja <= precioActual) {
+                    tvError.setText(String.format(
+                            Locale.getDefault(), "El monto debe ser mayor al precio actual: $ %.2f", precioActual));
+                    tvError.setVisibility(View.VISIBLE);
+                    return;
+                }
+                guardarPuja(articuloId, montoPuja);
+            } catch (NumberFormatException e) {
+                tvError.setText("Ingrese un monto válido");
                 tvError.setVisibility(View.VISIBLE);
-                return;
             }
-            guardarPuja(articuloId, montoPuja);
         });
     }
 
@@ -127,25 +120,29 @@ public class PujaDialogFragment extends DialogFragment {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            SubastasDatabase db = SubastasDatabase.obtenerInstancia(getContext());
+            SubastasDatabase db = SubastasDatabase.obtenerInstancia(requireContext());
 
             //se inserta la nueva puja
             Puja nuevaPuja = new Puja();
             nuevaPuja.articuloId = articuloId;
-            nuevaPuja.usuarioId = 1; // Suponiendo que el usuario está logeado
+            nuevaPuja.usuarioId = 1; 
             nuevaPuja.monto = montoPuja;
             nuevaPuja.timestamp = System.currentTimeMillis();
             db.pujaDao().insertar(nuevaPuja);
 
             //Actualiza el precio actual del articulo
-            Articulo articulo = db.articuloDao().buscarPorId(articuloId);
-            articulo.precioActual = montoPuja;
-            db.articuloDao().actualizar(articulo);
+            Articulo articulo = db.articuloDao().buscarPorIdSync(articuloId);
+            if (articulo != null) {
+                articulo.precioActual = montoPuja;
+                db.articuloDao().actualizar(articulo);
+            }
 
-            //notfica al fragment para refrescar la lista
             handler.post(() -> {
-                if (listener != null) listener.onPujaRealizada();
-                dismiss();
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Puja realizada con éxito", Toast.LENGTH_SHORT).show();
+                    if (listener != null) listener.onPujaRealizada();
+                    dismiss();
+                }
             });
         });
     }

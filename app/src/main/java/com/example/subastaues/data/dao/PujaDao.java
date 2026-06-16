@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.subastaues.data.entities.Puja;
+import com.example.subastaues.data.entities.PujaConArticulo;
 
 import java.util.List;
 
@@ -19,4 +20,11 @@ public interface PujaDao {
 
     @Query("SELECT MAX(monto) FROM pujas WHERE articuloId = :articuloId")
     double obtenerMejorPuja(int articuloId);
+
+    @Query("SELECT p.monto, p.timestamp, a.nombre AS nombreArticulo " +
+           "FROM pujas p " +
+           "INNER JOIN articulos a ON p.articuloId = a.id " +
+           "WHERE p.usuarioId = :usuarioId " +
+           "ORDER BY p.timestamp DESC")
+    List<PujaConArticulo> obtenerPujasConArticulo(int usuarioId);
 }

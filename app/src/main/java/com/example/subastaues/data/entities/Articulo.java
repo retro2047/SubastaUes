@@ -16,9 +16,10 @@ public class Articulo {
 
     public double precioActual;
 
-    public int estado;
+    public String estado;
 
-    public int VendedorId;
+    public int vendedorId;
+    public String imagenUrl;
 
 
 }

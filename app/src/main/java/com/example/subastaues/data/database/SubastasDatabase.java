@@ -16,12 +16,12 @@ import com.example.subastaues.data.entities.Usuario;
 
 @Database(
         entities = {Usuario.class, Articulo.class, Puja.class},
-        version = 1,
+        version = 3,
         exportSchema = false
 )
 public abstract class SubastasDatabase extends RoomDatabase {
 
-    private static SubastasDatabase instancia;
+    private static volatile SubastasDatabase instancia;
 
     public abstract UsuarioDao usuarioDao();
     public abstract ArticuloDao articuloDao();
