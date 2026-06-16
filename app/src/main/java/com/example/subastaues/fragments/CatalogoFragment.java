@@ -1,28 +1,25 @@
 package com.example.subastaues.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.subastaues.ArticuloViewModel;
 import com.example.subastaues.R;
 import com.example.subastaues.adapters.ArticuloAdapter;
-import com.example.subastaues.data.database.SubastasDatabase;
 import com.example.subastaues.data.entities.Articulo;
-
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class CatalogoFragment extends Fragment {
 
@@ -40,38 +37,35 @@ public class CatalogoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.recyclerArticulos);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         adapter = new ArticuloAdapter(new ArrayList<>(), new ArticuloAdapter.OnArticuloClickListener() {
             @Override
             public void onPujarClick(Articulo articulo) {
                 PujaDialogFragment dialog = PujaDialogFragment.newInstance(articulo);
-
-                dialog.setOnPujaExitosaListener(() -> cargarArticulos());
                 dialog.show(getParentFragmentManager(), "PujaDialog");
-
             }
 
             @Override
             public void onItemClick(Articulo articulo) {
-
+                Bundle bundle = new Bundle();
+                bundle.putInt("articuloId", articulo.id);
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.action_catalogo_to_detalle, bundle);
             }
         });
         recyclerView.setAdapter(adapter);
-        cargarArticulos();
-    }
 
-    private void cargarArticulos() {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        executor.execute(() -> {
-            List<Articulo> datos = SubastasDatabase
-                    .obtenerInstancia(getContext())
-                    .articuloDao()
-                    .obtenerActivos();
-
-            handler.post(() -> adapter.actualizarLista(datos));
+        // Uso de LiveData para observar cambios automáticamente
+        ArticuloViewModel viewModel = new ViewModelProvider(requireActivity())
+                .get(ArticuloViewModel.class);
+        viewModel.obtenerActivos().observe(getViewLifecycleOwner(), articulos -> {
+            if (articulos != null) {
+                adapter.actualizarLista(articulos);
+            }
         });
+
+        FloatingActionButton fab = view.findViewById(R.id.fabAgregarArticulo);
+        fab.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_catalogo_to_agregar));
     }
 }

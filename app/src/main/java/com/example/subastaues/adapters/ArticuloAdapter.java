@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.subastaues.R;
 import com.example.subastaues.data.entities.Articulo;
 
-import org.jspecify.annotations.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -61,9 +62,22 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.Articu
         holder.tvDescripcion.setText(articulo.descripcion);
         holder.tvPrecioActual.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioActual));
 
-        holder.imgArticulo.setImageResource(R.drawable.ic_launcher_background);
-
+        // Cargar la imagen con Glide
+        if (articulo.imagenUrl != null && !articulo.imagenUrl.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(articulo.imagenUrl)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_launcher_background)
+                    .centerCrop()
+                    .into(holder.imgArticulo);
+        } else {
+            holder.imgArticulo.setImageResource(R.drawable.ic_launcher_background);
+        }
         holder.btnPujar.setOnClickListener(v -> {
+            if (listener != null) listener.onPujarClick(articulo);
+        });
+
+        holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onItemClick(articulo);
         });
     }

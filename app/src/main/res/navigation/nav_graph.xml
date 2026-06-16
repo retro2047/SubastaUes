@@ -7,7 +7,15 @@
     <fragment
         android:id="@+id/catalogoFragment"
         android:name="com.example.subastaues.fragments.CatalogoFragment"
-        android:label="Catálogo" />
+        android:label="Catálogo">
+        <action
+            android:id="@+id/action_catalogo_to_detalle"
+            app:destination="@id/detalleArticuloFragment" />
+        <action
+            android:id="@+id/action_catalogo_to_agregar"
+            app:destination="@id/agregarArticuloFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/MisPujasFragment"
@@ -18,5 +26,16 @@
         android:id="@+id/perfilFragment"
         android:name="com.example.subastaues.fragments.PerfilFragment"
         android:label="Perfil" />
+
+    <fragment
+        android:id="@+id/detalleArticuloFragment"
+        android:name="com.example.subastaues.fragments.DetalleArticuloFragment"
+        android:label="Detalle" />
+
+    <fragment
+        android:id="@+id/agregarArticuloFragment"
+        android:name="com.example.subastaues.fragments.AgregarArticuloFragment"
+        android:label="Nuevo Artículo" />
+
 
 </navigation>
