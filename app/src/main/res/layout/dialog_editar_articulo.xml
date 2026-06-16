@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Editar Artículo"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Nombre (editable) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/etEditarNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del artículo"
+        android:layout_marginBottom="16dp"
+        android:inputType="text"
+        android:importantForAutofill="no"/>
+
+    <!-- Descripción (editable) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/etEditarDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:gravity="top"
+        android:layout_marginBottom="16dp"
+        android:importantForAutofill="no"/>
+
+    <!-- Precio Base (deshabilitado) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Precio Base (no se puede editar)"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/etEditarPrecio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layout_marginBottom="16dp"
+        android:inputType="none"
+        android:importantForAutofill="no"/>
+
+    <!-- Mensaje de información -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="La imagen y el precio no se pueden modificar porque el artículo ya está en subasta."
+        android:textSize="12sp"
+        android:textColor="#E53935"
+        android:layout_marginBottom="16dp"/>
+
+</LinearLayout>

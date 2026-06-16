@@ -16,7 +16,7 @@ import com.example.subastaues.data.entities.Usuario;
 
 @Database(
         entities = {Usuario.class, Articulo.class, Puja.class},
-        version = 3,
+        version = 5,
         exportSchema = false
 )
 public abstract class SubastasDatabase extends RoomDatabase {

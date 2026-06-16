@@ -61,10 +61,20 @@ public class DetalleArticuloFragment extends Fragment {
                         return;
                     }
 
-                    tvNombre.setText(articulo.nombre);
-                    tvDescripcion.setText(articulo.descripcion);
-                    tvPrecioBase.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioBase));
-                    tvPrecioActual.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioActual));
+                    tvNombre.setText(articulo.nombre != null ? articulo.nombre : "---");
+                    tvDescripcion.setText(articulo.descripcion != null ? articulo.descripcion : "");
+                    
+                    if (articulo.precioBase != null) {
+                        tvPrecioBase.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioBase));
+                    } else {
+                        tvPrecioBase.setText("$ 0.00");
+                    }
+
+                    if (articulo.precioActual != null) {
+                        tvPrecioActual.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioActual));
+                    } else {
+                        tvPrecioActual.setText("$ 0.00");
+                    }
 
                     Glide.with(requireContext())
                             .load(articulo.imagenUrl)

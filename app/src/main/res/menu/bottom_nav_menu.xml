@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_perfil"
         android:title="Perfil" />
 
+    <item
+        android:id="@+id/MisArticulosFragment"
+        android:icon="@drawable/ic_catalogo"
+        android:title="Mis Artiuclos" />
+
 </menu>

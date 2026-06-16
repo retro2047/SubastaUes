@@ -37,5 +37,10 @@
         android:name="com.example.subastaues.fragments.AgregarArticuloFragment"
         android:label="Nuevo Artículo" />
 
+    <fragment
+        android:id="@+id/MisArticulosFragment"
+        android:name="com.example.subastaues.fragments.MisArticulosFragment"
+        android:label="Mis Artiuclos" />
+
 
 </navigation>

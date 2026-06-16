@@ -12,9 +12,9 @@ public class Articulo {
 
     public String descripcion;
 
-    public double precioBase;
+    public Double precioBase;
 
-    public double precioActual;
+    public Double precioActual;
 
     public String estado;
 

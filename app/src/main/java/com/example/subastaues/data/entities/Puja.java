@@ -12,6 +12,6 @@ public class Puja {
 
     public int articuloId;
 
-    public double monto;
-    public long timestamp;
+    public Double monto;
+    public Long timestamp;
 }

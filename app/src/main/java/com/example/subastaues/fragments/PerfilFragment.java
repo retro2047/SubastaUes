@@ -51,8 +51,8 @@ public class PerfilFragment extends Fragment {
                 if ((fineLocation != null && fineLocation) || (coarseLocation != null && coarseLocation)) {
                     fetchLocation();
                 } else {
-                    Toast.makeText(requireContext(), "Permisos de ubicación denegados.", Toast.LENGTH_SHORT).show();
-                    textCoordinates.setText("Coordenadas: Permiso denegado");
+                    Toast.makeText(requireContext(), R.string.msg_permisos_denegados, Toast.LENGTH_SHORT).show();
+                    textCoordinates.setText("Coordenadas: Permiso Denegado");
                 }
             });
 
@@ -85,6 +85,9 @@ public class PerfilFragment extends Fragment {
         String email = userPrefs.getString("user_email", "usuario@ues.edu.sv");
         profileName.setText(name);
         profileEmail.setText(email);
+
+        // cargar ubicacion
+        cargarUbicacionGuardada();
 
         // Determine current theme to set the initial switch state
         int nightModeFlags = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -120,36 +123,68 @@ public class PerfilFragment extends Fragment {
         btnLogout.setOnClickListener(v -> {
             SharedPreferences.Editor editor = userPrefs.edit();
             editor.putBoolean("session_active", false);
-            // Optionally keep email/name, or clear completely:
             editor.remove("user_id");
             editor.remove("user_name");
             editor.remove("user_email");
             editor.apply();
 
-            Toast.makeText(requireContext(), "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), R.string.msg_sesion_cerrada, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(requireActivity(), LoginActivity.class);
             startActivity(intent);
             requireActivity().finish();
         });
     }
 
+    private void cargarUbicacionGuardada() {
+        String ubicacion = userPrefs.getString("user_location", null);
+        String address = userPrefs.getString("user_address", null);
+
+        if (ubicacion != null && !ubicacion.isEmpty()) {
+            textCoordinates.setText("Coordenadas: " + ubicacion);
+        } else {
+            textCoordinates.setText("Coordenadas: No configurada");
+        }
+
+        if (address != null && !address.isEmpty()) {
+            textAddress.setText("Dirección: " + address);
+        } else {
+            textAddress.setText("Dirección: No disponible");
+        }
+    }
+
     private void fetchLocation() {
         textCoordinates.setText("Coordenadas: Obteniendo ubicación...");
         textAddress.setText("Dirección: Obteniendo dirección...");
+
+        Toast.makeText(requireContext(), "Solicitando ubicación...", Toast.LENGTH_SHORT).show();
 
         locationHelper.getCurrentLocation(new LocationHelper.LocationCallback() {
             @Override
             public void onLocationFound(Location location) {
                 if (isAdded()) {
+                    Toast.makeText(requireContext(), "✓ Ubicación encontrada", Toast.LENGTH_SHORT).show();
+
                     double lat = location.getLatitude();
                     double lon = location.getLongitude();
-                    textCoordinates.setText(String.format(Locale.getDefault(), "Coordenadas: Lat: %.6f, Lon: %.6f", lat, lon));
-                    
-                    // Fetch address on a background task or using Geocoder directly
+                    String ubicacion = String.format(Locale.getDefault(), "Lat: %.6f, Lon: %.6f", lat, lon);
+
+                    // Guarda en SharedPreferences
+                    SharedPreferences.Editor editor = userPrefs.edit();
+                    editor.putString("user_location", ubicacion);
+                    editor.apply();
+
+                    textCoordinates.setText("Coordenadas: " + ubicacion);
+
                     new Thread(() -> {
                         String address = locationHelper.getAddressFromLocation(lat, lon);
                         if (getActivity() != null) {
-                            getActivity().runOnUiThread(() -> textAddress.setText("Dirección: " + address));
+                            getActivity().runOnUiThread(() -> {
+                                SharedPreferences.Editor editorDir = userPrefs.edit();
+                                editorDir.putString("user_address", address);
+                                editorDir.apply();
+
+                                textAddress.setText("Dirección: " + address);
+                            });
                         }
                     }).start();
                 }
@@ -158,9 +193,9 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onLocationError(String error) {
                 if (isAdded()) {
-                    textCoordinates.setText("Coordenadas: Error al obtener");
-                    textAddress.setText("Dirección: " + error);
-                    Toast.makeText(requireContext(), "Error de ubicación: " + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "✗ Error: " + error, Toast.LENGTH_LONG).show();
+                    textCoordinates.setText("Coordenadas: Error - " + error);
+                    textAddress.setText("Dirección: No disponible");
                 }
             }
         });

@@ -1,8 +1,6 @@
 package com.example.subastaues.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +18,6 @@ import com.example.subastaues.data.database.SubastasDatabase;
 import com.example.subastaues.data.entities.PujaConArticulo;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MisPujasFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -49,25 +45,18 @@ public class MisPujasFragment extends Fragment {
     }
 
     private void cargarMisPujas() {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        executor.execute(() -> {
-            List<PujaConArticulo> pujas = SubastasDatabase
-                    .obtenerInstancia(requireContext())
-                    .pujaDao()
-                    .obtenerPujasConArticulo(1);
-
-            handler.post(() -> {
-                if (pujas == null || pujas.isEmpty()) {
-                    tvSinPujas.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-                } else {
-                    tvSinPujas.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                    adapter.actualizarLista(pujas);
-                }
-            });
-        });
+        SubastasDatabase.obtenerInstancia(requireContext())
+                .pujaDao()
+                .obtenerPujasConArticulo(1)
+                .observe(getViewLifecycleOwner(), pujas -> {
+                    if (pujas == null || pujas.isEmpty()) {
+                        tvSinPujas.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    } else {
+                        tvSinPujas.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        adapter.actualizarLista(pujas);
+                    }
+                });
     }
 }

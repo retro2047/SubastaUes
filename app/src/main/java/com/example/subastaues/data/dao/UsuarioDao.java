@@ -13,8 +13,8 @@ public interface UsuarioDao {
     @Insert
     void insert(Usuario usuario);
 
-    @Query("SELECT * FROM usuario WHERE correo = :correo AND contraseña = :contraseña LIMIT 1")
-    Usuario login(String correo, String contraseña);
+    @Query("SELECT * FROM usuario WHERE correo = :correo AND password = :password LIMIT 1")
+    Usuario login(String correo, String password);
 
     @Query("SELECT * FROM usuario WHERE id = :id")
     Usuario getUsuarioById(int id);

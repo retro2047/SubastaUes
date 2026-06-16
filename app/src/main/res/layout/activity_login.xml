@@ -8,165 +8,171 @@
     android:background="?android:attr/windowBackground"
     tools:context=".LoginActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="24dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Logo / App Icon -->
-            <ImageView
-                android:id="@+id/logoApp"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/app_name"
-                android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="?attr/colorPrimary" />
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Subasta UES"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginBottom="4dp"/>
-
-            <TextView
-                android:id="@+id/textSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Plataforma de Subastas Universitarias"
-                android:textSize="14sp"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:layout_marginBottom="32dp"/>
-
-            <!-- Main Form Card -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="?attr/colorOutlineVariant">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="24dp">
 
-                <LinearLayout
+                <!-- Logo / App Icon -->
+                <ImageView
+                    android:id="@+id/logoApp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    app:tint="?attr/colorPrimary" />
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_subasta_ues"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/textSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subtitle_plataforma"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginBottom="32dp"/>
+
+                <!-- Main Form Card -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_marginBottom="24dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="?attr/colorOutlineVariant">
 
-                    <!-- Name Field (Register Mode Only) -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputLayoutNombre"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:hint="Nombre Completo"
-                        android:visibility="gone"
-                        app:startIconDrawable="@android:drawable/ic_menu_my_calendar">
+                        android:orientation="vertical"
+                        android:padding="20dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editNombre"
+                        <!-- Name Field (Register Mode Only) -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputLayoutNombre"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginBottom="12dp"
+                            android:hint="@string/hint_nombre"
+                            android:visibility="gone"
+                            app:startIconDrawable="@android:drawable/ic_menu_my_calendar">
 
-                    <!-- Email Field -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputLayoutCorreo"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:hint="Correo Institucional / Personal"
-                        app:startIconDrawable="@android:drawable/sym_action_email">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editNombre"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editCorreo"
+                        <!-- Email Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputLayoutCorreo"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginBottom="12dp"
+                            android:hint="@string/hint_correo"
+                            app:startIconDrawable="@android:drawable/sym_action_email">
 
-                    <!-- Password Field -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputLayoutPassword"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:hint="Contraseña"
-                        app:passwordToggleEnabled="true"
-                        app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editCorreo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editPassword"
+                        <!-- Password Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputLayoutPassword"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginBottom="12dp"
+                            android:hint="@string/hint_password"
+                            app:passwordToggleEnabled="true"
+                            app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
 
-                    <!-- Password Confirmation Field (Register Mode Only) -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputLayoutConfirmPassword"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:hint="Confirmar Contraseña"
-                        android:visibility="gone"
-                        app:passwordToggleEnabled="true"
-                        app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editConfirmPassword"
+                        <!-- Password Confirmation Field (Register Mode Only) -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputLayoutConfirmPassword"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginBottom="16dp"
+                            android:hint="@string/hint_confirm_password"
+                            android:visibility="gone"
+                            app:passwordToggleEnabled="true"
+                            app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
 
-                    <!-- Action Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSubmit"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:text="Iniciar Sesión"
-                        android:textSize="16sp"
-                        app:cornerRadius="8dp" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editConfirmPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <!-- Action Button -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSubmit"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:text="@string/btn_iniciar_sesion"
+                            android:textSize="16sp"
+                            app:cornerRadius="8dp" />
 
-            <!-- Toggle Register/Login Link -->
-            <TextView
-                android:id="@+id/textToggleMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿No tienes cuenta? Regístrate aquí"
-                android:textSize="14sp"
-                android:textColor="?attr/colorPrimary"
-                android:textStyle="bold"
-                android:padding="8dp"
-                android:clickable="true"
-                android:focusable="true"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-    </ScrollView>
+                <!-- Toggle Register/Login Link -->
+                <TextView
+                    android:id="@+id/textToggleMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_no_tienes_cuenta"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

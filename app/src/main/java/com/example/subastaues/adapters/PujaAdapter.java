@@ -47,11 +47,20 @@ public class PujaAdapter extends RecyclerView.Adapter<PujaAdapter.PujaViewHolder
     public void onBindViewHolder(@NonNull PujaViewHolder holder, int position) {
         PujaConArticulo puja = listaPujas.get(position);
 
-        holder.tvNombreArticulo.setText(puja.nombreArticulo);
-        holder.tvMonto.setText(String.format(Locale.getDefault(), "$ %.2f", puja.monto));
+        holder.tvNombreArticulo.setText(puja.nombreArticulo != null ? puja.nombreArticulo : "---");
+        
+        if (puja.monto != null) {
+            holder.tvMonto.setText(String.format(Locale.getDefault(), "$ %.2f", puja.monto));
+        } else {
+            holder.tvMonto.setText("$ 0.00");
+        }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        holder.tvFecha.setText(sdf.format(new Date(puja.timestamp)));
+        if (puja.timestamp != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            holder.tvFecha.setText(sdf.format(new Date(puja.timestamp)));
+        } else {
+            holder.tvFecha.setText("---");
+        }
     }
 
     @Override

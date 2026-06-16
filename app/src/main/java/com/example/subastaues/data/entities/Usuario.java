@@ -15,7 +15,15 @@ public class Usuario {
     @ColumnInfo(name = "correo")
     public String correo;
 
-    @ColumnInfo(name = "contraseña")
-    public String contraseña;
+    @ColumnInfo(name = "password")
+    public String password;
 
+    @ColumnInfo(name = "latitud")
+    public double latitud;
+
+    @ColumnInfo(name = "longitud")
+    public double longitud;
+
+    @ColumnInfo(name = "ubicacion")
+    public String ubicacion;
 }

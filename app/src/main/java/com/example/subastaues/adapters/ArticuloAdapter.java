@@ -58,9 +58,14 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.Articu
     @Override
     public void onBindViewHolder(@NonNull ArticuloViewHolder holder, int position) {
         Articulo articulo = listaArticulos.get(position);
-        holder.tvNombre.setText(articulo.nombre);
-        holder.tvDescripcion.setText(articulo.descripcion);
-        holder.tvPrecioActual.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioActual));
+        holder.tvNombre.setText(articulo.nombre != null ? articulo.nombre : "---");
+        holder.tvDescripcion.setText(articulo.descripcion != null ? articulo.descripcion : "");
+        
+        if (articulo.precioActual != null) {
+            holder.tvPrecioActual.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioActual));
+        } else {
+            holder.tvPrecioActual.setText("$ 0.00");
+        }
 
         // Cargar la imagen con Glide
         if (articulo.imagenUrl != null && !articulo.imagenUrl.isEmpty()) {

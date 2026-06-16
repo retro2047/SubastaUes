@@ -20,6 +20,9 @@ public interface ArticuloDao {
     @Query("SELECT * FROM articulos WHERE estado = 'activo'")
     LiveData<List<Articulo>> obtenerActivos();
 
+    @Query("SELECT * FROM articulos WHERE vendedorId = :vendedorId AND estado = 'activo'")
+    List<Articulo> obtenerPorVendedor(int vendedorId);
+
     @Query("SELECT * FROM articulos")
     LiveData<List<Articulo>> obtenerTodos();
 

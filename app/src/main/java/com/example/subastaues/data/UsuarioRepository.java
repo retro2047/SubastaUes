@@ -39,9 +39,9 @@ public class UsuarioRepository {
         });
     }
 
-    public void login(String correo, String contraseña, Callback<Usuario> callback) {
+    public void login(String correo, String password, Callback<Usuario> callback) {
         executor.execute(() -> {
-            Usuario usuario = usuarioDao.login(correo, contraseña);
+            Usuario usuario = usuarioDao.login(correo, password);
             mainThreadHandler.post(() -> {
                 if (callback != null) {
                     callback.onResult(usuario);

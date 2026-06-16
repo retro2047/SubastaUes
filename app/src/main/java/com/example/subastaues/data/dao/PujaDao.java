@@ -1,6 +1,7 @@
 package com.example.subastaues.data.dao;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -19,12 +20,12 @@ public interface PujaDao {
     List<Puja> obtenerPorArticulo(int articuloId);
 
     @Query("SELECT MAX(monto) FROM pujas WHERE articuloId = :articuloId")
-    double obtenerMejorPuja(int articuloId);
+    Double obtenerMejorPuja(int articuloId);
 
     @Query("SELECT p.monto, p.timestamp, a.nombre AS nombreArticulo " +
            "FROM pujas p " +
            "INNER JOIN articulos a ON p.articuloId = a.id " +
            "WHERE p.usuarioId = :usuarioId " +
            "ORDER BY p.timestamp DESC")
-    List<PujaConArticulo> obtenerPujasConArticulo(int usuarioId);
+    LiveData<List<PujaConArticulo>> obtenerPujasConArticulo(int usuarioId);
 }

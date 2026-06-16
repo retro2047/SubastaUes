@@ -20,4 +20,6 @@
     <!-- Text / Subtitles -->
     <color name="text_secondary_light">#666666</color>
     <color name="text_secondary_dark">#B0B0B0</color>
+
+    <color name="teal_700">#FF018786</color>
 </resources>
