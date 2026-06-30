@@ -1,9 +1,10 @@
 package com.example.subastaues.data.entities;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "articulos")
+@Entity(tableName = "articulos", foreignKeys = @ForeignKey(entity = Usuario.class, parentColumns = "id", childColumns = "vendedorId", onDelete = ForeignKey.CASCADE))
 public class Articulo {
     @PrimaryKey(autoGenerate = true)
     public int id;

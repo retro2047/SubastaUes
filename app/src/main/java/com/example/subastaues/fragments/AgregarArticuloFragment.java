@@ -1,5 +1,7 @@
 package com.example.subastaues.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -66,6 +68,15 @@ public class AgregarArticuloFragment extends Fragment {
 
             tvError.setVisibility(View.GONE);
 
+            //Recuperamos la sesion
+            SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+            int usuarioId = prefs.getInt("user_id", 0);
+
+            if (usuarioId == 0) {
+                Toast.makeText(getContext(), "Error: no hay session activa", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             ExecutorService executor = Executors.newSingleThreadExecutor();
             Handler handler = new Handler(Looper.getMainLooper());
 
@@ -76,7 +87,7 @@ public class AgregarArticuloFragment extends Fragment {
                 nuevo.precioBase = precioBase;
                 nuevo.precioActual = precioBase;
                 nuevo.estado = "activo";
-                nuevo.vendedorId = 1;
+                nuevo.vendedorId = usuarioId;
                 nuevo.imagenUrl = imagenUrl.isEmpty() ? "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"
                         : imagenUrl;
 
@@ -89,6 +100,7 @@ public class AgregarArticuloFragment extends Fragment {
                     Navigation.findNavController(requireView()).navigateUp();
                 });
             });
+            executor.shutdown();
         });
     }
 }

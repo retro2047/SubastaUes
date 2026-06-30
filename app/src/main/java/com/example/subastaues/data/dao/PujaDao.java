@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.example.subastaues.data.entities.Puja;
 import com.example.subastaues.data.entities.PujaConArticulo;
+import com.example.subastaues.data.entities.PujaConUsuario;
 
 import java.util.List;
 
@@ -28,4 +29,10 @@ public interface PujaDao {
            "WHERE p.usuarioId = :usuarioId " +
            "ORDER BY p.timestamp DESC")
     LiveData<List<PujaConArticulo>> obtenerPujasConArticulo(int usuarioId);
+
+    @Query("SELECT COUNT(*) FROM pujas WHERE articuloId = :articuloId")
+    int contarPujasPorArticulo(int articuloId);
+
+    @Query("SELECT * FROM pujas WHERE articuloId = :articuloId ORDER BY timestamp DESC")
+    LiveData<List<PujaConUsuario>> obtenerHistorialDePujas(int articuloId);
 }

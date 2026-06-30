@@ -12,12 +12,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.subastaues.R;
 import com.example.subastaues.data.database.SubastasDatabase;
-import com.example.subastaues.data.entities.Articulo;
+import com.example.subastaues.adapters.HistorialAdapter;
+import com.example.subastaues.data.entities.PujaConUsuario;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class DetalleArticuloFragment extends Fragment {
@@ -50,6 +54,21 @@ public class DetalleArticuloFragment extends Fragment {
         TextView tvPrecioBase = view.findViewById(R.id.tvDetallePrecioBase);
         TextView tvPrecioActual = view.findViewById(R.id.tvDetallePrecioActual);
         Button btnPujar = view.findViewById(R.id.btnDetallePujar);
+        RecyclerView historialPujas = view.findViewById(R.id.historialPujas);
+
+        historialPujas.setLayoutManager(new LinearLayoutManager(requireContext()));
+        HistorialAdapter adapter = new HistorialAdapter(new ArrayList<>());
+        historialPujas.setAdapter(adapter);
+
+        SubastasDatabase.obtenerInstancia(requireContext())
+                .pujaDao()
+                .obtenerHistorialDePujas(articuloId)
+                .observe(getViewLifecycleOwner(), listaPujas -> {
+                    if (listaPujas != null) {
+                        adapter.actualizarLista(listaPujas);
+                    }
+                });
+
 
         // Observar el artículo con LiveData para actualizaciones en tiempo real
         SubastasDatabase.obtenerInstancia(requireContext())
@@ -63,7 +82,7 @@ public class DetalleArticuloFragment extends Fragment {
 
                     tvNombre.setText(articulo.nombre != null ? articulo.nombre : "---");
                     tvDescripcion.setText(articulo.descripcion != null ? articulo.descripcion : "");
-                    
+
                     if (articulo.precioBase != null) {
                         tvPrecioBase.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioBase));
                     } else {
@@ -86,6 +105,8 @@ public class DetalleArticuloFragment extends Fragment {
                         PujaDialogFragment dialog = PujaDialogFragment.newInstance(articulo);
                         dialog.show(getParentFragmentManager(), "PujaDialog");
                     });
+
                 });
+
     }
 }

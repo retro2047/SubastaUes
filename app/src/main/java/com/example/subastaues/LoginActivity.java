@@ -192,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putInt("user_id", usuario.id);
         editor.putString("user_name", usuario.nombre);
         editor.putString("user_email", usuario.correo);
+        android.util.Log.d("DEPURACION_SESION", "Iniciando sesion - Usuario: " + usuario.nombre + "| ID a guardar" + usuario.id);
         editor.apply();
 
         String welcome = getString(R.string.welcome_message, usuario.nombre);

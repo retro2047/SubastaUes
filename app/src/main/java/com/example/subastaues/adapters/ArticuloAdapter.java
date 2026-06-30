@@ -60,6 +60,7 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.Articu
         Articulo articulo = listaArticulos.get(position);
         holder.tvNombre.setText(articulo.nombre != null ? articulo.nombre : "---");
         holder.tvDescripcion.setText(articulo.descripcion != null ? articulo.descripcion : "");
+
         
         if (articulo.precioActual != null) {
             holder.tvPrecioActual.setText(String.format(Locale.getDefault(), "$ %.2f", articulo.precioActual));

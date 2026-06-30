@@ -14,7 +14,6 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Imagen del artículo (requisito rúbrica #4) -->
         <ImageView
             android:id="@+id/imgArticulo"
             android:layout_width="match_parent"

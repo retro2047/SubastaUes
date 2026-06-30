@@ -75,6 +75,10 @@ public class MisArticulosFragment extends Fragment {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
+        if (usuarioId == 0) {
+            return;
+        }
+
         executor.execute(() -> {
             List<Articulo> articulos = SubastasDatabase
                     .obtenerInstancia(getContext())
@@ -92,6 +96,7 @@ public class MisArticulosFragment extends Fragment {
                 }
             });
         });
+        executor.shutdown();
     }
 
     private void confirmarEliminar(Articulo articulo) {
@@ -110,14 +115,26 @@ public class MisArticulosFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            SubastasDatabase.obtenerInstancia(getContext())
-                    .articuloDao()
-                    .eliminar(articulo);
 
-            handler.post(() -> {
-                Toast.makeText(getContext(), R.string.msg_articulo_eliminado, Toast.LENGTH_SHORT).show();
-                cargarMisArticulos();
-            });
+            int cantidadPujas = SubastasDatabase.obtenerInstancia(requireContext())
+                    .pujaDao()
+                    .contarPujasPorArticulo(articulo.id);
+
+            if (cantidadPujas > 0) {
+                handler.post(() -> {
+                    Toast.makeText(getContext(), "No se puede eliminar que ya esta en subasta.", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                SubastasDatabase.obtenerInstancia(getContext())
+                        .articuloDao()
+                        .eliminar(articulo);
+
+                handler.post(() -> {
+                    Toast.makeText(getContext(), R.string.msg_articulo_eliminado, Toast.LENGTH_SHORT).show();
+                    cargarMisArticulos();
+                });
+            }
         });
+        executor.shutdown();
     }
 }
