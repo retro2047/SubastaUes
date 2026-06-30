@@ -19,14 +19,25 @@ Aplicación móvil desarrollada en **Android Studio** para la gestión de subast
 
 ## Imagenes:
 - **Pantalla de Login:**
+<br><br>
 ![Pantalla de Login](screenshots/image1.jpeg)
+  <br><br>
 - **Pantalla de Crear cuenta:**
+<br><br>
 ![Pantalla de Crear cuenta](screenshots/image2.jpeg)
+<br><br>
 - **Pantalla de Subastas:**
+<br><br>
 ![Pantalla de Subastas](screenshots/image3.jpeg)
+  <br><br>
 - **Pantalla de Pujas del Usuario:**
+  <br><br>
 ![Pantalla de Pujas del Usuario](screenshots/image4.jpeg)
+  <br><br>
 - **Pantalla de Perfil del Usuario:**
+<br><br>
 ![Pantalla de Perfil del Usuario](screenshots/image5.jpeg)
+  <br><br>
 - **Pantalla de Mis Articulos:**
+  <br><br>
 ![Pantalla de Subastas echas por el Usuario](screenshots/image6.jpeg)
