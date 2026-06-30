@@ -17,3 +17,10 @@ Aplicación móvil desarrollada en **Android Studio** para la gestión de subast
 2. Abre el proyecto en **Android Studio**.
 3. Sincroniza las dependencias de **Gradle (versión mínima: [indica aquí la versión, ej: API 24]).p
 
+## Imagenes:
+![Pantalla de Login](screenshots/image1.jpeg)
+![Pantalla de Crear cuenta](screenshots/image2.jpeg)
+![Pantalla de Subastas](screenshots/image3.jpeg)
+![Pantalla de Pujas del Usuario](screenshots/image4.jpeg)
+![Pantalla de Perfil del Usuario](screenshots/image5.jpeg)
+![Pantalla de Subastas echas por el Usuario](screenshots/image6.jpeg)
