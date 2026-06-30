@@ -1,9 +1,19 @@
-**SUBASTAS UES
+**SUBASTAS UES**
 
--Proyecto el cual se realiza una app de subastas de productos, el estudiantes o usario puede ingresar al app y registrarse
--Crea una subasta ponen precio, la imagen del producto o objeto y cuando lo publica, ya los otros usuarios lo visualizan y le pueden dar puja.
+Aplicación móvil desarrollada en **Android Studio** para la gestión de subastas en tiempo real entre estudiantes y usuarios registrados.
 
-**Como se creo**
--Se utilizo la herramienta Android Studio, utilizamos Java con el lenguaje principal, para que los datos se guarden en una base se utilizo SQLite es decir
--que implementamos que lo datos se guarden en la App
+## Funcionalidades
+- **Registro de usuarios:** Gestión de cuentas para participantes.
+- **Creación de subastas:** Los usuarios pueden publicar productos incluyendo imagen, descripción y precio base.
+- **Sistema de pujas:** Interfaz dinámica para que otros usuarios visualicen los productos y realicen sus pujas en tiempo real.
+
+## Tecnologías utilizadas
+- **Lenguaje:** Java 
+- **IDE:** Android Studio
+- **Base de Datos:** SQLite (Persistencia de datos local)
+
+## Cómo ejecutar el proyecto
+1. Clona este repositorio: `git clone https://github.com/retro2047/SubastaUes`
+2. Abre el proyecto en **Android Studio**.
+3. Sincroniza las dependencias de **Gradle (versión mínima: [indica aquí la versión, ej: API 24]).p
 
